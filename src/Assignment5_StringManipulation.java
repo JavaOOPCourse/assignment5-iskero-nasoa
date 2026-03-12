@@ -1,4 +1,9 @@
 import java.util.Scanner;
+import java.util.HashSet;
+import java.util.Collections;
+import java.lang.StringBuilder;
+import java.util.Arrays;
+import java.util.Collection;
 
 public class Assignment5_StringManipulation {
 
@@ -52,7 +57,13 @@ public class Assignment5_StringManipulation {
 
         // TODO: Подсчитать количество гласных (a, e, i, o, u)
         int count = 0;
-
+            HashSet<Character> vowels = new HashSet<Character>();
+            Collections.addAll(vowels, 'a', 'e', 'i', 'o', 'u');
+            for(char i: input.toCharArray()){
+               if(vowels.contains(i)){
+                count += 1;
+            }
+        }
         System.out.println("Number of vowels: " + count);
     }
 
@@ -63,6 +74,10 @@ public class Assignment5_StringManipulation {
 
         // TODO: Вывести строку в обратном порядке
         String reversed = "";
+        for (char i: input.toCharArray()){
+                reversed = i + reversed;
+            }
+
 
         System.out.println(reversed);
     }
@@ -73,7 +88,8 @@ public class Assignment5_StringManipulation {
         String input = scanner.nextLine();
 
         // TODO: Проверить, является ли строка палиндромом (игнорировать регистр)
-        boolean isPalindrome = false;
+        String reversed = new StringBuilder(input).reverse().toString();
+        boolean isPalindrome = input.toLowerCase().equals(reversed.toLowerCase());
 
         System.out.println(isPalindrome ? "Yes" : "No");
     }
@@ -84,7 +100,7 @@ public class Assignment5_StringManipulation {
         String sentence = scanner.nextLine();
 
         // TODO: Подсчитать количество слов в предложении
-        int wordCount = 0;
+        int wordCount = sentence.split("\\s+").length;
 
         System.out.println("Number of words: " + wordCount);
     }
@@ -95,7 +111,7 @@ public class Assignment5_StringManipulation {
         String input = scanner.nextLine();
 
         // TODO: Удалить все пробелы из строки
-        String noSpaces = "";
+        String noSpaces = input.replaceAll("\\s+", "");
 
         System.out.println(noSpaces);
     }
@@ -107,6 +123,10 @@ public class Assignment5_StringManipulation {
 
         // TODO: Преобразовать первую букву каждого слова в заглавную
         String result = "";
+        String[] w = sentence.split("\\s+");
+        for (String word: w){
+            result +=sentence.substring(0,1).toUpperCase() + word.substring(1);
+        }
 
         System.out.println(result);
     }
@@ -118,6 +138,14 @@ public class Assignment5_StringManipulation {
 
         // TODO: Найти символ, который встречается чаще всего
         char mostFrequent = ' ';
+        int[] freq = new int[300];
+        
+        for (char x: input.toCharArray()){
+            freq[x] ++;
+            if (freq[x] > freq[mostFrequent]){
+                mostFrequent = x;
+            }
+        }
 
         System.out.println("The most frequent character is: " + mostFrequent);
     }
@@ -131,7 +159,14 @@ public class Assignment5_StringManipulation {
 
         // TODO: Проверить, являются ли две строки анаграммами (игнорировать пробелы и регистр)
         boolean areAnagrams = false;
-
+        if (str1.length() == str2.length()){
+            char[] array1 = str1.toCharArray();
+            char[] array2 = str2.toCharArray();
+            Arrays.sort(array1);
+            Arrays.sort(array2);
+            
+            areAnagrams = Arrays.equals(array1, array2);
+        }
         System.out.println(areAnagrams ? "Yes" : "No");
     }
 }
